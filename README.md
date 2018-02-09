@@ -4,11 +4,11 @@ Simple psr-4 style autolader with gettext settings
 Directory structure:
 
 yourProject/
--app/
--public/
-  -index.php
-  -.htaccess
--src/
+- app/
+- public/
+-   index.php
+-   .htaccess
+- src/
 -   namespace/
 -     subnamespace/
 -       src/ [classes of subnamespace here]
