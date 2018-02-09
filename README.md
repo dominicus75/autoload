@@ -6,8 +6,6 @@ Directory structure:
 yourProject/
 - app/
 - public/
--   index.php
--   .htaccess
 - src/
 -   namespace/
 -     subnamespace/
