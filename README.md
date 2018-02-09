@@ -1,2 +1,2 @@
 # autoload
-Simple autolader
+Simple autolader with gettext settings
