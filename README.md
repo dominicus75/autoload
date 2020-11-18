@@ -3,6 +3,7 @@ Simple [psr-4](https://github.com/dominicus75/fig-standards/blob/master/accepted
 
 Directory structure:
 
+```bash
 yourProject/
 ├── public/
 │   ├── .htaccess
@@ -14,7 +15,7 @@ yourProject/
 ├── app/
 │   ├── class1Name.php
 │   ├── class2Name.php
-│   └── subNamespaceName/ 
+│   └── subNamespaceName/
 │       ├── class1Name.php
 │       └── class2Name.php
 └── vendor/
@@ -24,6 +25,7 @@ yourProject/
             └── src/
                 ├── class1Name.php
                 ├── class2Name.php
-                └── subNamespaceName/ 
+                └── subNamespaceName/
                     ├── class1Name.php
                     └── class2Name.php
+```
