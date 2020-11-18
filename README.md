@@ -1,25 +1,29 @@
 # autoload
-Simple psr-4 style autolader with gettext settings
+Simple [psr-4](https://github.com/dominicus75/fig-standards/blob/master/accepted/PSR-4-autoloader.md) style autolader
 
 Directory structure:
 
 yourProject/
-- app/
-- public/
-- src/
--     namespace/
--       subnamespace/
--         src/ [classes of subnamespace here]
--           Example.php
--         locale/
--           hu/
--             LC_MESSAGES/ [.pot, .po and .mo files here]
--               Example.pot
--               Example.po
--               Example.mo
--           de/
--             LC_MESSAGES/ [.pot, .po and .mo files here]
--               Example.pot
--               Example.po
--               Example.mo
- 
+├── public/
+│   ├── .htaccess
+│   ├── index.php
+│   ├── css/
+│   ├── images/
+│   ├── js/
+│   └── uploads/
+├── app/
+│   ├── class1Name.php
+│   ├── class2Name.php
+│   └── subNamespaceName/ 
+│       ├── class1Name.php
+│       └── class2Name.php
+└── vendor/
+    ├── autoload.php
+    └── vendorName/
+        └── packageName/
+            └── src/
+                ├── class1Name.php
+                ├── class2Name.php
+                └── subNamespaceName/ 
+                    ├── class1Name.php
+                    └── class2Name.php

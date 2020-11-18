@@ -1,44 +1,47 @@
 <?php
+
 /*
- * autoload.php
- *
- * @package AMDG
- * @author Domokos Endre János <domokos.endrejanos@gmail.com>
- * @copyright 2018 Domokos Endre János
- * @license GNU General Public License v3 (https://opensource.org/licenses/GPL-3.0)
- *
- * @param string $class_name The fully-qualified class name.
- * @return void
- *
+ * @file autoload.php
+ * @package dominicus75
+ * @copyright 2020 Domokos Endre János <domokos.endrejanos@gmail.com>
+ * @license MIT License (https://opensource.org/licenses/MIT)
  */
-
-
-define("DS", DIRECTORY_SEPARATOR);
-define("PRD", dirname($_SERVER['DOCUMENT_ROOT'])); // Projekt Root Directory
-define("PUB", $_SERVER['DOCUMENT_ROOT']); // PUBlic directory (e.g. public_html)
-define("APP", PRD."/app"); // APPlication root directory
-define("SRC", PRD."/src"); // SouRCe root directory
 
 
 spl_autoload_register(function ($class_name) {
 
+  $DSR = DIRECTORY_SEPARATOR;
+  $PRD = dirname(__DIR__).$DSR;   // Projekt Root Directory
+  $APP = $PRD."app".$DSR;         // APPlication root directory
+  $VEN = $PRD."vendor".$DSR;      // VENdor root directory
+
   $fully_qualified_name = explode("\\", $class_name);
-  $prefix = strtolower(array_shift($fully_qualified_name));
-  $class = array_pop($fully_qualified_name);
-  $namespace = strtolower(implode(DS, $fully_qualified_name));
+  $vendor = strtolower(array_shift($fully_qualified_name)).$DSR;
 
-  $root = ($prefix == "app") ? APP.DS : SRC.DS ;
-  $file = $root.$namespace.DS."src".DS.$class.".php";
+  $numberOfItems = count($fully_qualified_name);
 
-  if (file_exists($file)) {
-    # Begin gettext config
-    bindtextdomain($class, $root.$namespace.DS."locale");
-    bind_textdomain_codeset($class, 'UTF-8');
-    textdomain($class);
-    # end gettext config
-    require $file;
+  if($numberOfItems == 1) {
+    $class = $fully_qualified_name[0];
+    $file = (preg_match("/^Applic/i", $vendor))
+    ? $APP.$class.".php"
+    : $VEN.$vendor.$class.".php" ;
+  } elseif($numberOfItems == 2){
+    $namespace = strtolower($fully_qualified_name[0]).$DSR;
+    $class = $fully_qualified_name[1];
+    $file = (preg_match("/^applic/i", $vendor))
+    ? $APP.$namespace.$class.".php"
+    : $VEN.$vendor.$namespace."src".$DSR.$class.".php";
+  } else {
+    $namespace = strtolower(array_shift($fully_qualified_name)).$DSR;
+    $class = array_pop($fully_qualified_name);
+    $subNamespace = $DSR.implode($DSR, $fully_qualified_name).$DSR;
+    $file = (preg_match("/^applic/i", $vendor))
+    ? $APP.$namespace.$subNamespace.$class.".php"
+    : $VEN.$vendor.$namespace."src".$subNamespace.$class.".php";
   }
+
+  if (file_exists($file)) { require $file; }
 
 });
 
-?>
+
