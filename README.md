@@ -1,10 +1,11 @@
 # autoload
-Simple [psr-4](https://github.com/dominicus75/fig-standards/blob/master/accepted/PSR-4-autoloader.md) style autolader
+
+Simple [psr-4](https://github.com/dominicus75/fig-standards/blob/master/accepted/PSR-4-autoloader.md) style autolader.
 
 Directory structure:
 
 ```bash
-yourProject/
+yourProjectRoot/
 ├── public/
 │   ├── .htaccess
 │   ├── index.php
@@ -13,19 +14,19 @@ yourProject/
 │   ├── js/
 │   └── uploads/
 ├── app/
-│   ├── class1Name.php
-│   ├── class2Name.php
-│   └── subNamespaceName/
-│       ├── class1Name.php
-│       └── class2Name.php
+│   ├── Class1Name.php
+│   ├── Class2Name.php
+│   └── NamespaceName/
+│       ├── Class1Name.php
+│       └── Class2Name.php
 └── vendor/
     ├── autoload.php
-    └── vendorName/
-        └── packageName/
+    └── vendorname/
+        └── PackageName/
             └── src/
-                ├── class1Name.php
-                ├── class2Name.php
-                └── subNamespaceName/
-                    ├── class1Name.php
-                    └── class2Name.php
+                ├── Class1Name.php
+                ├── Class2Name.php
+                └── NamespaceName/
+                    ├── Class1Name.php
+                    └── Class2Name.php
 ```

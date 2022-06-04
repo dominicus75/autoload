@@ -1,45 +1,34 @@
 <?php
 
-/*
- * @file autoload.php
- * @package dominicus75
- * @copyright 2020 Domokos Endre János <domokos.endrejanos@gmail.com>
+/**
+ * A simple, PSR-4 style autolader
+ * 
+ * @copyright 2022 Domokos Endre János <domokos.endrejanos@gmail.com>
  * @license MIT License (https://opensource.org/licenses/MIT)
+ * 
  */
+spl_autoload_register(function ($class_name)
+{
 
+    $fully_qualified_name = explode("\\", $class_name);
+  
+    $vendor = strtolower(array_shift($fully_qualified_name));
+    $class  = array_pop($fully_qualified_name).'.php';
+    $items  = count($fully_qualified_name);
 
-spl_autoload_register(function ($class_name) {
+    if (preg_match("/^app/i", $vendor)) {
+        $file  = dirname(__DIR__).DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR;
+        $file .= ($items == 0) ? $class : implode(DIRECTORY_SEPARATOR, $fully_qualified_name).DIRECTORY_SEPARATOR.$class;
+    } else {
+        $file  = dirname(__DIR__).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.$vendor.DIRECTORY_SEPARATOR;
+        if ($items == 1) {
+            $file .= $fully_qualified_name[0].DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR.$class;
+        } elseif ($items > 1) {
+            $file .= array_shift($fully_qualified_name).DIRECTORY_SEPARATOR.'src'.DIRECTORY_SEPARATOR;
+            $file .= implode(DIRECTORY_SEPARATOR, $fully_qualified_name).DIRECTORY_SEPARATOR.$class;
+        }
+    } 
 
-  $DSR = DIRECTORY_SEPARATOR;
-  $PRD = dirname(__DIR__).$DSR;   // Projekt Root Directory
-  $APP = $PRD."app".$DSR;         // APPlication root directory
-  $VEN = $PRD."vendor".$DSR;      // VENdor root directory
-
-  $fully_qualified_name = explode("\\", $class_name);
-
-  $vendor = strtolower(array_shift($fully_qualified_name)).$DSR;
-  $class  = array_pop($fully_qualified_name);
-  $file   = (preg_match("/^Applic/i", $vendor)) ? $APP : $VEN.$vendor ;
-
-  $numberOfItems = count($fully_qualified_name);
-
-  if($numberOfItems == 0) {
-    $file .= $class.".php";
-  } elseif($numberOfItems == 1){
-    $namespace = strtolower($fully_qualified_name[0]).$DSR;
-    $file .= (preg_match("/^applic/i", $vendor))
-    ? $namespace.$class.".php"
-    : $namespace."src".$DSR.$class.".php";
-  } else {
-    $namespace = strtolower(array_shift($fully_qualified_name)).$DSR;
-    $subNamespace = $DSR.implode($DSR, $fully_qualified_name).$DSR;
-    $file .= (preg_match("/^applic/i", $vendor))
-    ? $namespace.$subNamespace.$class.".php"
-    : $namespace."src".$subNamespace.$class.".php";
-  }
-
-  if (file_exists($file)) { require $file; }
-
+    if (file_exists($file)) { require $file; }
+  
 });
-
-
